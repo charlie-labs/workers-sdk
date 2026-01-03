@@ -126,6 +126,19 @@ test.serial("Miniflare: validates options", async (t) => {
 	});
 });
 
+test.serial("Miniflare: accepts mixed r2Buckets record", (t) => {
+	const mf = new Miniflare({
+		modules: true,
+		script: "",
+		r2Buckets: {
+			LOCAL_BUCKET: "local-bucket",
+			REMOTE_BUCKET: { id: "remote-bucket" },
+		},
+	});
+	t.teardown(() => mf.dispose());
+	t.truthy(mf);
+});
+
 test("Miniflare: ready returns copy of entry URL", async (t) => {
 	const mf = new Miniflare({
 		port: 0,
