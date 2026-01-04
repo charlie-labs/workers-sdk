@@ -128,6 +128,9 @@ test.serial("Miniflare: validates options", async (t) => {
 
 test.serial("Miniflare: accepts mixed r2Buckets record", (t) => {
 	let mf: Miniflare | undefined;
+	t.teardown(async () => {
+		await mf?.dispose();
+	});
 	t.notThrows(() => {
 		mf = new Miniflare({
 			modules: true,
@@ -138,10 +141,6 @@ test.serial("Miniflare: accepts mixed r2Buckets record", (t) => {
 			},
 		});
 	});
-	t.teardown(async () => {
-		await mf?.dispose();
-	});
-	t.truthy(mf);
 });
 
 test("Miniflare: ready returns copy of entry URL", async (t) => {
